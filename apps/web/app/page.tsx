@@ -12,7 +12,6 @@ import {
   vendorColor,
 } from "@/lib/colors";
 import { useMediaQuery } from "@mantine/hooks";
-import { Button } from "@workspace/ui/components/button";
 import {
   Tabs,
   TabsContent,
@@ -64,7 +63,7 @@ export default function Page() {
         </TabsContent>
         <TabsContent value="parse"></TabsContent>
       </Tabs>
-      <Connections className="w-full h-full -z-100" />
+      <Connections className="w-full h-full" />
     </div>
   );
 }

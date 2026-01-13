@@ -20,6 +20,14 @@ import { ReleaseStatus, releaseStatuses } from "@/lib/fields/release-status";
 import { ReleaseUsage, releaseUsages } from "@/lib/fields/release-usage";
 import BuildstampDisplay from "../buildstamp-display";
 import { Connect } from "../connect/connect";
+import { Button } from "@workspace/ui/components/button";
+import { Copy } from "lucide-react";
+import {
+  Buildstamp,
+  Release,
+  serializeBuildstamp,
+  Version,
+} from "@/lib/buildstamp";
 
 export default function BuildstampGen() {
   const [belonging, setBelonging] = useState<Belonging | undefined>(undefined);
@@ -43,6 +51,32 @@ export default function BuildstampGen() {
   const [minorVersion, setMinorVersion] = useState<number>(0);
   const [patchVersion, setPatchVersion] = useState<number>(0);
 
+  const release: Release | undefined =
+    releaseStatus && releaseUsage
+      ? {
+          status: releaseStatus,
+          usage: releaseUsage,
+        }
+      : undefined;
+  const version: Version = {
+    major: majorVersion,
+    minor: minorVersion,
+    patch: patchVersion,
+  };
+
+  const buildstamp: Buildstamp | undefined =
+    belonging && vendor && devStatus && buildDate && release
+      ? {
+          belonging,
+          vendor,
+          dev: devStatus,
+          serial,
+          date: buildDate,
+          release,
+          version,
+        }
+      : undefined;
+
   return (
     <div className="w-full max-w-md">
       {/* input */}
@@ -54,7 +88,7 @@ export default function BuildstampGen() {
             <div className="flex flex-row items-center justify-center gap-4">
               <Field>
                 <FieldLabel>Belonging</FieldLabel>
-                <Connect id="input-belonging">
+                <Connect id="input-belonging" className="w-full">
                   <BelongingInput
                     value={belonging?.id}
                     onValueChange={(value) =>
@@ -65,7 +99,7 @@ export default function BuildstampGen() {
               </Field>
               <Field>
                 <FieldLabel>Vendor</FieldLabel>
-                <Connect id="input-vendor">
+                <Connect id="input-vendor" className="w-full">
                   <AbbrSelect
                     placeholder="Select a vendor"
                     values={vendors}
@@ -83,7 +117,7 @@ export default function BuildstampGen() {
             <Field>
               <FieldLabel>Development Status and Project Serial</FieldLabel>
               <div className="flex flex-row items-center justify-center gap-4">
-                <Connect id="input-dev-status">
+                <Connect id="input-dev-status" className="w-full">
                   <AbbrSelect
                     placeholder="Select a development status"
                     values={devStatuses}
@@ -93,9 +127,9 @@ export default function BuildstampGen() {
                     }
                   />
                 </Connect>
-                <Connect id="input-serial">
+                <Connect id="input-serial" className="w-20">
                   <Input
-                    className="w-20 font-mono"
+                    className="font-mono"
                     type="number"
                     value={serial}
                     onChange={(e) => setSerial(Number(e.target.value))}
@@ -113,8 +147,12 @@ export default function BuildstampGen() {
           <FieldSet>
             <FieldLegend>Build Date</FieldLegend>
             <Field>
-              <Connect id="input-build-date">
-                <BuildDateInput date={buildDate} setDate={setBuildDate} />
+              <Connect id="input-build-date" className="w-full">
+                <BuildDateInput
+                  className="w-full"
+                  date={buildDate}
+                  setDate={setBuildDate}
+                />
               </Connect>
               <FieldDescription>
                 The date when the build was created, under local timezone.
@@ -128,7 +166,7 @@ export default function BuildstampGen() {
             <div className="flex flex-row items-center justify-center gap-4">
               <Field>
                 <FieldLabel>Release Status</FieldLabel>
-                <Connect id="input-release-status">
+                <Connect id="input-release-status" className="w-full">
                   <AbbrSelect
                     placeholder="Select a release status"
                     values={releaseStatuses}
@@ -143,7 +181,7 @@ export default function BuildstampGen() {
               </Field>
               <Field>
                 <FieldLabel>Release Usage</FieldLabel>
-                <Connect id="input-release-usage">
+                <Connect id="input-release-usage" className="w-full">
                   <AbbrSelect
                     placeholder="Select a release usage"
                     values={releaseUsages}
@@ -160,7 +198,7 @@ export default function BuildstampGen() {
             <div className="flex flex-row items-center justify-center gap-4">
               <Field>
                 <FieldLabel>Major Version</FieldLabel>
-                <Connect id="input-major-version">
+                <Connect id="input-major-version" className="w-full">
                   <Input
                     className="font-mono"
                     type="number"
@@ -171,7 +209,7 @@ export default function BuildstampGen() {
               </Field>
               <Field>
                 <FieldLabel>Minor Version</FieldLabel>
-                <Connect id="input-minor-version">
+                <Connect id="input-minor-version" className="w-full">
                   <Input
                     className="font-mono"
                     type="number"
@@ -182,7 +220,7 @@ export default function BuildstampGen() {
               </Field>
               <Field>
                 <FieldLabel>Patch Version</FieldLabel>
-                <Connect id="input-patch-version">
+                <Connect id="input-patch-version" className="w-full">
                   <Input
                     className="font-mono"
                     type="number"
@@ -203,19 +241,32 @@ export default function BuildstampGen() {
       </form>
 
       {/* output */}
-      <BuildstampDisplay
-        className="w-full my-10 font-medium text-4xl"
-        belonging={belonging}
-        vendor={vendor}
-        devStatus={devStatus}
-        serial={serial}
-        buildDate={buildDate}
-        releaseStatus={releaseStatus}
-        releaseUsage={releaseUsage}
-        majorVersion={majorVersion}
-        minorVersion={minorVersion}
-        patchVersion={patchVersion}
-      />
+      <div className="w-full my-10 flex flex-row items-center justify-center gap-4">
+        <BuildstampDisplay
+          className="font-medium text-4xl"
+          belonging={belonging}
+          vendor={vendor}
+          devStatus={devStatus}
+          serial={serial}
+          buildDate={buildDate}
+          releaseStatus={releaseStatus}
+          releaseUsage={releaseUsage}
+          majorVersion={majorVersion}
+          minorVersion={minorVersion}
+          patchVersion={patchVersion}
+        />
+        <Button
+          variant="outline"
+          disabled={!buildstamp}
+          onClick={() => {
+            if (buildstamp) {
+              navigator.clipboard.writeText(serializeBuildstamp(buildstamp));
+            }
+          }}
+        >
+          <Copy />
+        </Button>
+      </div>
     </div>
   );
 }

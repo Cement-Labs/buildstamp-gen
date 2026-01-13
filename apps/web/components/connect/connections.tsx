@@ -55,7 +55,7 @@ export function Connections(props: React.ComponentProps<"svg">) {
 
       connectWith.forEach((conn) => {
         const target = registry.get(conn.id);
-        if (!target?.element) return;
+        if (!target?.element || conn.visible === false) return;
 
         const targetRect = target.element.getBoundingClientRect();
         list.push({

@@ -26,13 +26,11 @@ export default function ConnectProvider({
         existing.element === element &&
         JSON.stringify(existing.connectWith) === JSON.stringify(connectWith)
       ) {
-        console.log(prev);
         return prev;
       }
 
       const next = new Map(prev);
       next.set(id, { element, connectWith });
-      console.log(next);
       return next;
     });
   };

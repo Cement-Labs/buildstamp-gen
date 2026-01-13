@@ -15,7 +15,7 @@ export default function AbbrDisplay({
           {...props}
           className={cn(
             props.className,
-            "select-none font-mono font-medium p-0.5 -m-0.5 rounded-sm hover:bg-current/10"
+            "select-none font-mono font-medium rounded-sm hover:bg-current/10"
           )}
         >
           {abbr}
@@ -25,7 +25,7 @@ export default function AbbrDisplay({
           {...props}
           className={cn(
             props.className,
-            "select-none font-mono font-medium opacity-30 hover:opacity-100 p-0.5 -m-0.5 rounded-sm hover:bg-current/10"
+            "select-none font-mono font-medium opacity-30 hover:opacity-100 rounded-sm hover:bg-current/10"
           )}
         >
           {"X".repeat(placeholderLength)}

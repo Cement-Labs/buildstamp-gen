@@ -5,11 +5,12 @@ export function Connect({
   children,
   id,
   connectWith = [],
+  ...props
 }: {
   children: React.ReactNode;
   id: string;
   connectWith?: ConnectionConfig[];
-}) {
+} & React.ComponentProps<"div">) {
   const { register } = useContext(ConnectContext);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -18,7 +19,7 @@ export function Connect({
   }, [id, connectWith, register]);
 
   return (
-    <div ref={ref} className="relative contents">
+    <div {...props} ref={ref}>
       {children}
     </div>
   );

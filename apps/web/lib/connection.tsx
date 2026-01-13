@@ -25,6 +25,7 @@ export interface ConnectionConfig {
   direction?: ConnectionDirection;
   fromAnchor?: ConnectionAnchor;
   toAnchor?: ConnectionAnchor;
+  visible?: boolean;
 }
 
 export type ConnectRegistry = Map<
