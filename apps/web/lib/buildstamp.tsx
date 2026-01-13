@@ -34,9 +34,8 @@ export function serializeBuildstamp(buildstamp: Buildstamp): string {
   const buildDateAbbr = getBuildDateAbbr(date);
   const patchAbbr = getPatchAbbr(version.patch);
 
-  const projectInfo = `${belonging.abbr()}${vendor.abbr()}${dev.abbr()}`;
-  const serialAndDate = `${serial}${buildDateAbbr}`;
-  const releaseAndVersion = `${release.status.abbr()}${version.major}${release.usage.abbr()}${version.minor}${patchAbbr}`;
+  const projectInfo = `${belonging.abbr()}${vendor.abbr()}${dev.abbr()}${serial}`;
+  const releaseAndVersioning = `${release.status.abbr()}${version.major}${release.usage.abbr()}${version.minor}${patchAbbr}`;
 
-  return `${projectInfo}${serialAndDate}${releaseAndVersion}`;
+  return `${projectInfo}${buildDateAbbr}${releaseAndVersioning}`;
 }

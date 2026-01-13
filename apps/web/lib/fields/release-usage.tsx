@@ -6,7 +6,7 @@ export type ReleaseUsage = Abbr & {
   display: Display;
 };
 
-export const usages: ReleaseUsage[] = [
+export const releaseUsages: ReleaseUsage[] = [
   {
     id: "debug",
     abbr: () => "D",

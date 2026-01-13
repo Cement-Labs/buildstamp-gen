@@ -1,7 +1,7 @@
 export function getBuildDateAbbr(date: Date): string {
-  const year = date.getUTCFullYear().toString().slice(-2); // last two digits of year
-  const month = (date.getUTCMonth() + 1).toString().padStart(2, "0"); // months are zero-indexed, so add 1
-  const day = date.getUTCDate().toString().padStart(2, "0");
+  const year = date.getFullYear().toString().slice(-2); // last two digits of year
+  const month = (date.getMonth() + 1).toString().padStart(2, "0"); // months are zero-indexed, so add 1
+  const day = date.getDate().toString().padStart(2, "0");
   return `${year}${month}${day}`; // YYMMDD format
 }
 

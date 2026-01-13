@@ -15,7 +15,7 @@ export type PersonalBelonging = Belonging & {
   type: "personal";
 };
 
-export const orgBelongings: Belonging[] = [
+export const belongings: Belonging[] = [
   // org
   {
     type: "org",
