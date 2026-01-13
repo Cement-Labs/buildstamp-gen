@@ -9,7 +9,7 @@ import {
   FieldLegend,
   FieldSet,
 } from "@workspace/ui/components/field";
-import { useState } from "react";
+import { Fragment, useRef, useState } from "react";
 import { Belonging, belongings } from "@/lib/fields/belonging";
 import { Vendor, vendors } from "@/lib/fields/vendor";
 import { DevStatus, devStatuses } from "@/lib/fields/dev-status";
@@ -18,12 +18,8 @@ import AbbrSelect from "./inputs/abbr-select";
 import { Input } from "@workspace/ui/components/input";
 import { ReleaseStatus, releaseStatuses } from "@/lib/fields/release-status";
 import { ReleaseUsage, releaseUsages } from "@/lib/fields/release-usage";
-import {
-  Buildstamp,
-  Release,
-  serializeBuildstamp,
-  Version,
-} from "@/lib/buildstamp";
+import BuildstampDisplay from "../buildstamp-display";
+import { Connect } from "../connect/connect";
 
 export default function BuildstampGen() {
   const [belonging, setBelonging] = useState<Belonging | undefined>(undefined);
@@ -47,61 +43,38 @@ export default function BuildstampGen() {
   const [minorVersion, setMinorVersion] = useState<number>(0);
   const [patchVersion, setPatchVersion] = useState<number>(0);
 
-  const release: Release | undefined =
-    releaseStatus && releaseUsage
-      ? {
-          status: releaseStatus,
-          usage: releaseUsage,
-        }
-      : undefined;
-
-  const version: Version = {
-    major: majorVersion,
-    minor: minorVersion,
-    patch: patchVersion,
-  };
-
-  const buildstamp: Buildstamp | undefined =
-    belonging && vendor && devStatus && buildDate && release
-      ? {
-          date: buildDate,
-          serial,
-          belonging,
-          vendor,
-          dev: devStatus,
-          release,
-          version,
-        }
-      : undefined;
-
   return (
     <div className="w-full max-w-md">
       {/* input */}
       <form>
         <FieldGroup>
-          {/* project information */}
-          <FieldLegend>Project Information</FieldLegend>
           <FieldSet>
+            {/* project information */}
+            <FieldLegend>Project Information</FieldLegend>
             <div className="flex flex-row items-center justify-center gap-4">
               <Field>
                 <FieldLabel>Belonging</FieldLabel>
-                <BelongingInput
-                  value={belonging?.id}
-                  onValueChange={(value) =>
-                    setBelonging(belongings.find((b) => b.id === value))
-                  }
-                />
+                <Connect id="input-belonging">
+                  <BelongingInput
+                    value={belonging?.id}
+                    onValueChange={(value) =>
+                      setBelonging(belongings.find((b) => b.id === value))
+                    }
+                  />
+                </Connect>
               </Field>
               <Field>
                 <FieldLabel>Vendor</FieldLabel>
-                <AbbrSelect
-                  placeholder="Select a vendor"
-                  values={vendors}
-                  value={vendor?.id}
-                  onValueChange={(value) =>
-                    setVendor(vendors.find((v) => v.id === value))
-                  }
-                />
+                <Connect id="input-vendor">
+                  <AbbrSelect
+                    placeholder="Select a vendor"
+                    values={vendors}
+                    value={vendor?.id}
+                    onValueChange={(value) =>
+                      setVendor(vendors.find((v) => v.id === value))
+                    }
+                  />
+                </Connect>
               </Field>
             </div>
             <FieldDescription>
@@ -110,20 +83,24 @@ export default function BuildstampGen() {
             <Field>
               <FieldLabel>Development Status and Project Serial</FieldLabel>
               <div className="flex flex-row items-center justify-center gap-4">
-                <AbbrSelect
-                  placeholder="Select a development status"
-                  values={devStatuses}
-                  value={devStatus?.id}
-                  onValueChange={(value) =>
-                    setDevStatus(devStatuses.find((d) => d.id === value))
-                  }
-                />
-                <Input
-                  className="w-20 font-mono"
-                  type="number"
-                  value={serial}
-                  onChange={(e) => setSerial(Number(e.target.value))}
-                />
+                <Connect id="input-dev-status">
+                  <AbbrSelect
+                    placeholder="Select a development status"
+                    values={devStatuses}
+                    value={devStatus?.id}
+                    onValueChange={(value) =>
+                      setDevStatus(devStatuses.find((d) => d.id === value))
+                    }
+                  />
+                </Connect>
+                <Connect id="input-serial">
+                  <Input
+                    className="w-20 font-mono"
+                    type="number"
+                    value={serial}
+                    onChange={(e) => setSerial(Number(e.target.value))}
+                  />
+                </Connect>
               </div>
               <FieldDescription>
                 The development status and project serial number. The serial
@@ -136,7 +113,9 @@ export default function BuildstampGen() {
           <FieldSet>
             <FieldLegend>Build Date</FieldLegend>
             <Field>
-              <BuildDateInput date={buildDate} setDate={setBuildDate} />
+              <Connect id="input-build-date">
+                <BuildDateInput date={buildDate} setDate={setBuildDate} />
+              </Connect>
               <FieldDescription>
                 The date when the build was created, under local timezone.
               </FieldDescription>
@@ -149,27 +128,31 @@ export default function BuildstampGen() {
             <div className="flex flex-row items-center justify-center gap-4">
               <Field>
                 <FieldLabel>Release Status</FieldLabel>
-                <AbbrSelect
-                  placeholder="Select a release status"
-                  values={releaseStatuses}
-                  value={releaseStatus?.id}
-                  onValueChange={(value) =>
-                    setReleaseStatus(
-                      releaseStatuses.find((r) => r.id === value)
-                    )
-                  }
-                />
+                <Connect id="input-release-status">
+                  <AbbrSelect
+                    placeholder="Select a release status"
+                    values={releaseStatuses}
+                    value={releaseStatus?.id}
+                    onValueChange={(value) =>
+                      setReleaseStatus(
+                        releaseStatuses.find((r) => r.id === value)
+                      )
+                    }
+                  />
+                </Connect>
               </Field>
               <Field>
                 <FieldLabel>Release Usage</FieldLabel>
-                <AbbrSelect
-                  placeholder="Select a release usage"
-                  values={releaseUsages}
-                  value={releaseUsage?.id}
-                  onValueChange={(value) =>
-                    setReleaseUsage(releaseUsages.find((r) => r.id === value))
-                  }
-                />
+                <Connect id="input-release-usage">
+                  <AbbrSelect
+                    placeholder="Select a release usage"
+                    values={releaseUsages}
+                    value={releaseUsage?.id}
+                    onValueChange={(value) =>
+                      setReleaseUsage(releaseUsages.find((r) => r.id === value))
+                    }
+                  />
+                </Connect>
               </Field>
             </div>
           </FieldSet>
@@ -177,30 +160,36 @@ export default function BuildstampGen() {
             <div className="flex flex-row items-center justify-center gap-4">
               <Field>
                 <FieldLabel>Major Version</FieldLabel>
-                <Input
-                  className="font-mono"
-                  type="number"
-                  value={majorVersion}
-                  onChange={(e) => setMajorVersion(Number(e.target.value))}
-                />
+                <Connect id="input-major-version">
+                  <Input
+                    className="font-mono"
+                    type="number"
+                    value={majorVersion}
+                    onChange={(e) => setMajorVersion(Number(e.target.value))}
+                  />
+                </Connect>
               </Field>
               <Field>
                 <FieldLabel>Minor Version</FieldLabel>
-                <Input
-                  className="font-mono"
-                  type="number"
-                  value={minorVersion}
-                  onChange={(e) => setMinorVersion(Number(e.target.value))}
-                />
+                <Connect id="input-minor-version">
+                  <Input
+                    className="font-mono"
+                    type="number"
+                    value={minorVersion}
+                    onChange={(e) => setMinorVersion(Number(e.target.value))}
+                  />
+                </Connect>
               </Field>
               <Field>
                 <FieldLabel>Patch Version</FieldLabel>
-                <Input
-                  className="font-mono"
-                  type="number"
-                  value={patchVersion}
-                  onChange={(e) => setPatchVersion(Number(e.target.value))}
-                />
+                <Connect id="input-patch-version">
+                  <Input
+                    className="font-mono"
+                    type="number"
+                    value={patchVersion}
+                    onChange={(e) => setPatchVersion(Number(e.target.value))}
+                  />
+                </Connect>
               </Field>
             </div>
           </FieldSet>
@@ -214,9 +203,19 @@ export default function BuildstampGen() {
       </form>
 
       {/* output */}
-      <div className="flex flex-row items-center justify-center mt-8 font-mono font-medium text-2xl">
-        {buildstamp && serializeBuildstamp(buildstamp)}
-      </div>
+      <BuildstampDisplay
+        className="w-full my-10 font-medium text-4xl"
+        belonging={belonging}
+        vendor={vendor}
+        devStatus={devStatus}
+        serial={serial}
+        buildDate={buildDate}
+        releaseStatus={releaseStatus}
+        releaseUsage={releaseUsage}
+        majorVersion={majorVersion}
+        minorVersion={minorVersion}
+        patchVersion={patchVersion}
+      />
     </div>
   );
 }

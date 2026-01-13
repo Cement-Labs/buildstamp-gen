@@ -8,6 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@workspace/ui/components/select";
+import React from "react";
 
 function groupBelongings() {
   return belongings.reduce<Record<Belonging["type"], Belonging[]>>(
@@ -33,12 +34,15 @@ function getBelongingTypeName(type: Belonging["type"]) {
   }
 }
 
-export default function BelongingInput(
-  props: React.ComponentProps<typeof Select>
-) {
+export default function BelongingInput({
+  id,
+  ...props
+}: {
+  id?: string;
+} & React.ComponentProps<typeof Select>) {
   return (
     <Select {...props}>
-      <SelectTrigger className="w-full">
+      <SelectTrigger className="w-full" id={id}>
         <SelectValue placeholder="Select a belonging" />
       </SelectTrigger>
       <SelectContent>

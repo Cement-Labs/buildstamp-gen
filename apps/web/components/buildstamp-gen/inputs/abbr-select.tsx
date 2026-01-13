@@ -9,16 +9,18 @@ import {
 export default function AbbrSelect<
   V extends { id: string; display: { name: string }; abbr: () => string },
 >({
+  id,
   placeholder,
   values,
   ...props
 }: {
+  id?: string;
   placeholder?: string;
   values: V[];
 } & React.ComponentProps<typeof Select>) {
   return (
     <Select {...props}>
-      <SelectTrigger className="w-full">
+      <SelectTrigger className="w-full" id={id}>
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
       <SelectContent>

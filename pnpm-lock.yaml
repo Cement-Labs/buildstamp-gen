@@ -26,9 +26,15 @@ importers:
 
   apps/web:
     dependencies:
+      '@mantine/hooks':
+        specifier: ^8.3.12
+        version: 8.3.12(react@19.2.1)
       '@workspace/ui':
         specifier: workspace:*
         version: link:../../packages/ui
+      leader-line:
+        specifier: ^1.0.8
+        version: 1.0.8
       lucide-react:
         specifier: ^0.475.0
         version: 0.475.0(react@19.2.1)
@@ -522,6 +528,11 @@ packages:
 
   '@jridgewell/trace-mapping@0.3.9':
     resolution: {integrity: sha512-3Belt6tdc8bPgAtbcmdtNJlirVoTmEb5e2gC94PnkwEW9jI6CAHUeoG85tjWP5WquqfavoMtMwiG4P926ZKKuQ==}
+
+  '@mantine/hooks@8.3.12':
+    resolution: {integrity: sha512-lMMDzDewd3lUNtJCAHDj3g8On9X5aBl4q6EBwgOixKQSby9RG9ASEpK8oYHundHTm9tzo3MDeXWV/z32oSQWuw==}
+    peerDependencies:
+      react: ^18.x || ^19.x
 
   '@next/env@16.0.10':
     resolution: {integrity: sha512-8tuaQkyDVgeONQ1MeT9Mkk8pQmZapMKFh5B+OrFUlG3rVmYTXcXlBetBgTurKXGaIZvkoqRT9JL5K3phXcgang==}
@@ -2160,6 +2171,9 @@ packages:
   keyv@4.5.4:
     resolution: {integrity: sha512-oxVHkHR/EJf2CNXnWxRLW6mg7JyCCUcG0DtEGmL2ctUo1PNTin1PUil+r/+4r5MpVgC/fn1kjsx7mjSujKqIpw==}
 
+  leader-line@1.0.8:
+    resolution: {integrity: sha512-3TOYtjjcYJCdtEs+bCuVSj6GvFiAzywtjifeeVcBYVwejHfI8a/NRxU4s6DjXB+H/ccNA/qtZEjrFVw9W97dCQ==}
+
   levn@0.4.1:
     resolution: {integrity: sha512-+bT2uH4E5LGE7h/n3evcS/sQlJXCpIp6ym8OWJ5eV6+67Dsql/LaaT7qJBAt2rzfoa/5QBGBhxDix1dMt2kQKQ==}
     engines: {node: '>= 0.8.0'}
@@ -3475,6 +3489,10 @@ snapshots:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.4
+
+  '@mantine/hooks@8.3.12(react@19.2.1)':
+    dependencies:
+      react: 19.2.1
 
   '@next/env@16.0.10': {}
 
@@ -5289,6 +5307,8 @@ snapshots:
   keyv@4.5.4:
     dependencies:
       json-buffer: 3.0.1
+
+  leader-line@1.0.8: {}
 
   levn@0.4.1:
     dependencies:
