@@ -3,6 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "license": "PROPRIETARY",
+  "scripts": {
+    "lint": "echo \"No linting needed for config package\""
+  },
   "publishConfig": {
     "access": "public"
   }

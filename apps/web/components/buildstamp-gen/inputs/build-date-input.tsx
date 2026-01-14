@@ -2,7 +2,6 @@ import { cn } from "@/lib/cn";
 import { getBuildDateAbbr } from "@/lib/fields/misc";
 import { Button } from "@workspace/ui/components/button";
 import { Calendar } from "@workspace/ui/components/calendar";
-import { Label } from "@workspace/ui/components/label";
 import {
   Popover,
   PopoverTrigger,

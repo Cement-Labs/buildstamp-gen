@@ -49,7 +49,7 @@ export function Connections(props: React.ComponentProps<"svg">) {
   const links = useMemo(() => {
     const list: { from: DOMRect; to: DOMRect; config: ConnectionConfig }[] = [];
 
-    registry.forEach(({ element, connectWith }, _id) => {
+    registry.forEach(({ element, connectWith }) => {
       if (!element) return;
       const sourceRect = element.getBoundingClientRect();
 

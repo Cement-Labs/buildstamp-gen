@@ -8,7 +8,6 @@ import { getBuildDateAbbr, getPatchAbbr } from "@/lib/fields/misc";
 import { cn } from "@/lib/cn";
 import { Connect } from "./connect/connect";
 import { useHover } from "@mantine/hooks";
-import { useEffect } from "react";
 
 export default function BuildstampDisplay({
   belonging,
