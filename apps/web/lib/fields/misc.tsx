@@ -6,8 +6,8 @@ export function getBuildDateAbbr(date: Date): string {
 }
 
 export function getPatchAbbr(patch: number): string {
-  if (patch < 0) return "a"; // handle negative patch numbers
-  if (patch > 25) patch = patch % 26; // wrap around for patch numbers > 25
-  const charCode = "a".charCodeAt(0) + (patch % 26);
+  if (patch < 0) return "a"; // cap at 'a' for negative patch numbers
+  if (patch > 25) return "z"; // cap at 'z' for patch numbers > 25
+  const charCode = "a".charCodeAt(0) + patch;
   return String.fromCharCode(charCode); // alphabetic 0-25 to a-z
 }
