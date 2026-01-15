@@ -1,31 +1,28 @@
-# shadcn/ui monorepo template
+# [Buildstamp Generator](https://cement-labs.github.io/buildstamp-gen/)
 
-This template is for creating a monorepo with shadcn/ui.
+This project provides a simple interface to generate and parse (working in progress) buildstamps used by Cement Labs and related organizations/people.
 
-## Usage
+## Generator Interface
 
-```bash
-pnpm dlx shadcn@latest init
-```
+### Project Information
 
-## Adding components
+- Belonging (e.g., `CL` for **Cement Labs**)
+- Vendor (e.g., `G` for **GitHub**)
+- Development status (e.g., `D` for **Development**)
+- Project serial (e.g., `1` for **the first project under the same belonging**)
 
-To add components to your app, run the following command at the root of your `web` app:
+### Build Date
 
-```bash
-pnpm dlx shadcn@latest add button -c apps/web
-```
+- `YYMMDD` coded (e.g., `260101` for **Jan 1, 2026**)
 
-This will place the ui components in the `packages/ui/src/components` directory.
+### Release and Versioning
 
-## Tailwind
+- Release status (e.g., `A` for **alpha**)
+- Release usage (e.g., `P` for **public release**)
+- Major, minor and patch versions (e.g., `1` `1` `a`)
 
-Your `tailwind.config.ts` and `globals.css` are already set up to use the components from the `ui` package.
+### Output
 
-## Using components
+`CLGD1260101A1P1a`, with interactive and intuitive leader lines pointing to unabbreviated fields.
 
-To use the components in your app, import them from the `ui` package.
-
-```tsx
-import { Button } from "@workspace/ui/components/button"
-```
+## Parser Interface
