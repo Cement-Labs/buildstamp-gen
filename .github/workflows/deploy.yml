@@ -25,10 +25,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Bun
-        uses: oven-sh/setup-bun@v2
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
-          bun-version: latest
+          node-version: "20"
+          cache: pnpm
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9.12.3
+          run_install: false
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -36,13 +43,13 @@ jobs:
           static_site_generator: next
 
       - name: Install dependencies
-        run: bun install --frozen-lockfile
+        run: pnpm install --frozen-lockfile
 
       - name: Lint
-        run: bun run lint
+        run: pnpm run lint
 
       - name: Build with Next.js
-        run: bun run build
+        run: pnpm run build
         env:
           NODE_ENV: production
 

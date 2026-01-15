@@ -49,7 +49,7 @@ export default function Page() {
     >
       <Tabs
         defaultValue="gen"
-        className="w-full h-full flex flex-col flex-grow items-center justify-center"
+        className="w-full h-full flex flex-col grow items-center justify-center"
       >
         <TabsList>
           <TabsTrigger value="gen">Generate</TabsTrigger>
@@ -57,7 +57,7 @@ export default function Page() {
         </TabsList>
         <TabsContent
           value="gen"
-          className="w-full h-full flex flex-col flex-grow items-center justify-center"
+          className="w-full h-full flex flex-col grow items-center justify-center"
         >
           <BuildstampGen />
         </TabsContent>
